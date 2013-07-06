@@ -1,0 +1,14 @@
+Game::Battleship=~/dev/Games/Game-Battleship CD=. {
+ lib=lib/Game/Battleship {
+  ../Battleship.pm
+  Craft.pm
+  Grid.pm
+  Player.pm
+ }
+ t=t {
+  00-load.t
+  01-methods.t
+ }
+ Changes
+ dist.ini
+}

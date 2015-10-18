@@ -34,10 +34,10 @@ isa_ok $craft, 'Game::Battleship::Craft', 'by id';
 isa_ok $aaron->craft(name => 'aircraft carrier'), 'Game::Battleship::Craft', 'by name';
 ok $craft->hit == $craft->{points} - 1, 'craft hit';
 
-my $ggrid = $gene->grid;
+my $ggrid = $gene->matrix;
 ok length($ggrid), "gene's initial grid:\n" . join( "\n", $ggrid );
 diag "gene's initial grid:\n" . join( "\n", $ggrid );
-my $agrid = $aaron->grid;
+my $agrid = $aaron->matrix;
 ok length($agrid), "aaron's initial grid:\n" . join( "\n", $agrid );
 diag "aaron's initial grid:\n" . join( "\n", $agrid );
 
@@ -50,14 +50,14 @@ for my $i ( 0 .. 9 ) {
             $strike = $aaron->strike($gene, $i, $j);
             ok $strike == 0 || $strike == 1,
                 "aaron strikes gene at row=$i, col=$j";
-#            $agrid = $aaron->grid($gene);
+#            $agrid = $aaron->matrix($gene);
 #            ok length($agrid), "aaron vs gene grid:\n" . join( "\n", $agrid );
         }
         else {
             $strike = $gene->strike($aaron, $i, $j);
             ok length($strike),
                 "gene strikes aaron at row=$i, col=$j";
-#            $ggrid = $gene->grid($aaron);
+#            $ggrid = $gene->matrix($aaron);
 #            ok length($ggrid), "gene vs aaron grid:\n" . join( "\n", $ggrid );
         }
 
@@ -71,7 +71,7 @@ for my $i ( 0 .. 9 ) {
 
     $strike = $gene->strike($aaron, 0, 0);
     ok length($strike), "gene strikes aaron at row=0, col=0";
-#    $ggrid = $gene->grid($aaron);
+#    $ggrid = $gene->matrix($aaron);
 #    ok length($ggrid), "gene vs aaron grid:\n" . join( "\n", $ggrid );
     ok $strike == 0 || $strike == 1 || $strike == -1,
         "..and it's a ($strike) " .
@@ -79,9 +79,9 @@ for my $i ( 0 .. 9 ) {
          $strike == 0 ? 'miss.'
                       : 'duplicate strike?');
 
-$ggrid = $gene->grid;
+$ggrid = $gene->matrix;
 ok length($ggrid), "gene's resulting grid:\n" . join( "\n", $ggrid );
-$agrid = $aaron->grid;
+$agrid = $aaron->matrix;
 ok length($agrid), "aaron's resulting grid:\n" . join( "\n", $agrid );
 
 done_testing();

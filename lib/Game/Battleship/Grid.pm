@@ -1,5 +1,4 @@
 package Game::Battleship::Grid;
-$VERSION = '0.0302';
 use strict;
 use warnings;
 use Carp;

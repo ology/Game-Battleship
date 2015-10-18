@@ -1,4 +1,3 @@
-#!perl -T
 use strict;
 use warnings;
 use Test::More 'no_plan';
@@ -12,7 +11,7 @@ isa_ok $obj, 'Game::Battleship', 'with no arguments';
 $obj = Game::Battleship->new('gene', 'aaron');
 isa_ok $obj, 'Game::Battleship', 'with named players';
 
-my $gene  = $obj->player('gene');
+my $gene = $obj->player('gene');
 isa_ok $gene, 'Game::Battleship::Player',
     'gene by object';
 my $aaron = $obj->player('aaron');
@@ -28,6 +27,7 @@ isa_ok $obj->player('player_3'), 'Game::Battleship::Player',
     'alisa by key';
 isa_ok $obj->player('alisa'), 'Game::Battleship::Player',
     'alisa by name';
+ok $obj->player(3) eq $obj->player('player_3') && $obj->player(3) eq $obj->player('alisa'), 'alisa';
 
 my $bogus = $obj->player('bogus');
 is $bogus, undef, 'bogus is not a player';
@@ -43,8 +43,10 @@ ok $craft->hit == $craft->{points} - 1, 'craft hit';
 
 my $ggrid = $gene->grid;
 ok length($ggrid), "gene's initial grid:\n" . join( "\n", $ggrid );
+diag "gene's initial grid:\n" . join( "\n", $ggrid );
 my $agrid = $aaron->grid;
 ok length($agrid), "aaron's initial grid:\n" . join( "\n", $agrid );
+diag "aaron's initial grid:\n" . join( "\n", $agrid );
 
 my $strike;
 my $count = 0;

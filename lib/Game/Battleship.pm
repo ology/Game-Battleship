@@ -25,12 +25,12 @@ Game::Battleship - "You sunk my battleship!"
 
 A C<Game::Battleship> object represents a battleship game between
 players.  Each has a fleet of vessels and operates with a pair of
-playing grids  One is for their own fleet and one for where the
-enemy has been seen.
+playing grids.  One grid is for their own fleet and the other for
+the seen enemy positions.
 
 Everything is an object with default but mutable attributes.  This way
 games can have two or more players each with a single fleet of custom
-vessels.  These vessels are pretty simple and standard right now...
+vessels.
 
 A game can be played with the handy C<play()> method or for finer
 control, use individual methods of the C<Game::Battleship::*>
@@ -41,22 +41,22 @@ modules.  See the distribution test script for working code examples.
 =head2 B<new()>
 
   $g = Game::Battleship->new;
+  $g = Game::Battleship->new($name);
+  $g = Game::Battleship->new($player_object);
   $g = Game::Battleship->new(
-      $name_1,
-      $player_object,
-      { name => $name_2,
+      { name => $name,
         fleet => \@fleet,
-        dimensions => [ $width, $height ], },
+        dimensions => [ $width, $height ] },
   );
 
 Construct a new C<Game::Battleship> object.
 
-The players can be given as scalars, a C<Game::Battleship::Player>
-object or as a hash reference containing meaningful object attributes.
+The players can be given as strings, C<Game::Battleship::Player>
+objects or as hash references containing player attributes.
 
 If not given explicitly, 'player_1' and 'player_2' are used as the
-player names and two 10x10 grids with 5 predetermined ships are setup
-by default for each.
+player names with two 10 x 10 grids and 5 predetermined ships are setup
+for each.
 
 See L<Game::Battleship::Player> for details on the default and custom
 settings.
@@ -76,16 +76,6 @@ sub _setup {
     # Set up a default, two player game if no players are given.
     @players = ('', '') unless @players;
     $self->add_player($_) for @players;
-}
-
-=head2 B<game_type()>
-
-=cut
-
-sub game_type {
-    my $self = shift;
-    $self->{type} = shift if @_;
-    return $self->{type};
 }
 
 =head2 B<add_player()>
@@ -110,7 +100,7 @@ the player number.
 
 If this number is not provided, the least whole number that is not
 represented in the player IDs is used.  If a player already exists
-with that number, a warning is emitted and the player is not added..
+with that number, a warning is emitted and the player is not added.
 
 =cut
 
@@ -263,19 +253,11 @@ sub _get_coordinate {
 
     my ($x, $y);
 
-    # Are we using a specific game type?
-    if ($self->{type}) {
-warn "Unimlemented feature.  RTFM please.\n";
-#        if ($self->{type} eq 'text') {}
-#        elsif ($self->{type} eq 'cgi') {}
-    }
-#    else {
-        # No?  Okay, just return random coordinates, then.
+        # Return random coordinates...
         ($x, $y) = (
             int 1 + rand $player->{grid}->{dimension}[0],
             int 1 + rand $player->{grid}->{dimension}[1]
         );
-#    }
 
 #    warn "$x, $y\n";
     return $x, $y;
@@ -291,26 +273,11 @@ remaining, shots taken, hits made or ships sunk (etc?).
 
 Make the C<play> method output the player grids for each turn.
 
-Keep pending games and personal scores in a couple handy text files.
+Keep pending games and personal scores in a handy file.
 
 Make an eg/simple program with text and then one with colored text.
 
-Implement game type and then allow network play.
-
-Make an eg/cgi program both as text and with Imager.
-
-Make standalone GUI programs too...
-
-Enhance to include these features:
-sonar imaging from your submarine.
-2 Exocet missiles fired from your aircraft carrier.
-1 Tomahawk missile fired from your battleship.
-2 Apache missile fired from your destroyer.
-2 torpedoes fired from your submarine.
-2 recon airplanes for surveillance.
-
-This all just means implementing weapon and recon classes with name,
-quantity and footprint.
+Enhance weaponry and sensing.
 
 =head1 SEE ALSO
 
@@ -319,17 +286,5 @@ quantity and footprint.
 * L<Game::Battleship::Craft>, L<Game::Battleship::Grid>, L<Game::Battleship::Player>
 
 * L<http://en.wikipedia.org/wiki/Battleship_%28game%29>
-
-=head1 AUTHOR
-
-Gene Boggs E<lt>gene@cpan.orgE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2003-2012, Gene Boggs
-
-=head1 LICENSE
-
-This software is free to use for non-commercial, personal purposes.
 
 =cut

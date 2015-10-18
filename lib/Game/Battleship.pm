@@ -253,11 +253,11 @@ sub _get_coordinate {
 
     my ($x, $y);
 
-        # Return random coordinates...
-        ($x, $y) = (
-            int 1 + rand $player->{grid}->{dimension}[0],
-            int 1 + rand $player->{grid}->{dimension}[1]
-        );
+    # Return random coordinates...
+    ($x, $y) = (
+        int 1 + rand $player->{grid}->{dimension}[0],
+        int 1 + rand $player->{grid}->{dimension}[1]
+    );
 
 #    warn "$x, $y\n";
     return $x, $y;
@@ -272,10 +272,6 @@ Implement the "number of shots" measure.  This may be based on life
 remaining, shots taken, hits made or ships sunk (etc?).
 
 Make the C<play> method output the player grids for each turn.
-
-Keep pending games and personal scores in a handy file.
-
-Make an eg/simple program with text and then one with colored text.
 
 Enhance weaponry and sensing.
 

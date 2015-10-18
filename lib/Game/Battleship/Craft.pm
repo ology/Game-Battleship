@@ -1,8 +1,6 @@
 package Game::Battleship::Craft;
-use strict;
-use warnings;
-use Carp;
 
+use Carp;
 use Moo;
 use Types::Standard qw( ArrayRef Int Num Str );
 

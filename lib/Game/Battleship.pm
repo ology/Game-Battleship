@@ -1,10 +1,7 @@
 package Game::Battleship;
 # ABSTRACT: "You sunk my battleship!"
 
-use strict;
-use warnings;
-
-our $VERSION = '0.06';
+our $VERSION = '0.0601';
 
 use Carp;
 use Game::Battleship::Player;

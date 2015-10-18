@@ -1,10 +1,8 @@
 package Game::Battleship::Player;
-use strict;
-use warnings;
+
 use Carp;
 use Game::Battleship::Craft;
 use Game::Battleship::Grid;
-
 use Moo;
 use Types::Standard qw( ArrayRef Int Str );
 

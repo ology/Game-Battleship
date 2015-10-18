@@ -1,9 +1,7 @@
 package Game::Battleship::Grid;
-use strict;
-use warnings;
+
 use Carp;
 use Game::Battleship::Craft;
-
 use Moo;
 use Types::Standard qw( ArrayRef Int );
 

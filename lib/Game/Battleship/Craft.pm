@@ -99,7 +99,15 @@ The position of the craft bow ("nose") on the grid.
 
 The craft is assumed to have a horizontal or vertical alignment.
 
+=item * hits => $NUMBER
+
+Computed
+
 =back
+
+=head2 B<BUILD>
+
+Setup
 
 =head2 B<hit()>
 

@@ -1,6 +1,9 @@
 Revision history for Games-Battleship
 
 {{$NEXT}}
+    - Whoops! Removed accidentally left-in POD cruft.
+
+0.0504 2015-10-17
     - Improved documentation.
     - Removed imaginary "game type" logic.
     - Update distribution metadata with modern tools.

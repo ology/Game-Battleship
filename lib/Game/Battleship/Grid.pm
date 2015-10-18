@@ -249,7 +249,7 @@ non-overlapping positions.
 Naturally, it is required that the combined sizes of the ships be
 less than the area of the grid.
 
-=item * dimensions => [$WIDTH, $HEIGHT]
+=item * dimension => [$WIDTH, $HEIGHT]
 
 Optional array reference with the grid height and width values.
 

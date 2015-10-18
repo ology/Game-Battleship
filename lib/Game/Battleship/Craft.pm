@@ -44,7 +44,7 @@ sub hit {
     # Tally the hit.
     $self->{hits}++;
     # Hand back the remainder of the craft's value.
-    return $self->{points} - $self->{hits};
+    return $self->points - $self->hits;
 }
 
 1;

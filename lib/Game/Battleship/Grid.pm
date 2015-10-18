@@ -23,8 +23,8 @@ sub BUILD {
     my $self = shift;
 
     # Initialize the matrix.
-    for my $i (0 .. $self->{dimension}[0]) {
-        for my $j (0 .. $self->{dimension}[1]) {
+    for my $i (0 .. $self->dimension->[0]) {
+        for my $j (0 .. $self->dimension->[1]) {
             $self->{matrix}[$i][$j] = '.';
         }
     }
@@ -33,34 +33,34 @@ sub BUILD {
     for my $craft (@{ $self->{fleet} }) {
         my ($ok, $x0, $y0, $x1, $y1, $orient);
 
-        if (defined $craft->{position}) {
-            ($x0, $y0) = ($craft->{position}[0], $craft->{position}[1]);
+        if (defined $craft->position) {
+            ($x0, $y0) = ($craft->position->[0], $craft->position->[1]);
 
             # Set the craft orientation and tail coordinates.
             ($orient, $x1, $y1) = _tail_coordinates(
                 $x0, $y0,
-                $craft->{points} - 1
+                $craft->points - 1
             );
         }
         else {
 # XXX This looping is needlessly brutish. refactoring please
             while (not $ok) {
                 # Grab a random coordinate that we haven't seen.
-                $x0 = int(rand($self->{dimension}[0] + 1));
-                $y0 = int(rand($self->{dimension}[1] + 1));
+                $x0 = int(rand($self->dimension->[0] + 1));
+                $y0 = int(rand($self->dimension->[1] + 1));
 
                 # Set the craft orientation and tail coordinates.
                 ($orient, $x1, $y1) = _tail_coordinates(
                     $x0, $y0,
-                    $craft->{points} - 1
+                    $craft->points - 1
                 );
 
                 # If the craft is not placed off the grid and it does
                 # not collide with another craft, then we are ok to
                 # move on.
 # XXX regex constraint rules here?
-                if ($x1 <= $self->{dimension}[0] &&
-                    $y1 <= $self->{dimension}[1]
+                if ($x1 <= $self->dimension->[0] &&
+                    $y1 <= $self->dimension->[1]
                 ) {
                     # For each craft (except the current one) that has
                     # a position, do the craft share a common point?
@@ -68,14 +68,14 @@ sub BUILD {
 
                     for (@{ $self->{fleet} }) {
                         # Ships can't be the same.
-                        if ($craft->{name} ne $_->{name}) {
+                        if ($craft->name ne $_->name) {
                             # Ships can't intersect.
-                            if (defined $_->{position} &&
+                            if (defined $_->position &&
                                 _segment_intersection(
                                     $x0, $y0,
                                     $x1, $y1,
-                                    @{ $_->{position}[0] },
-                                    @{ $_->{position}[1] }
+                                    @{ $_->position->[0] },
+                                    @{ $_->position->[1] }
                                 )
                             ) {
                                 $collide = 1;
@@ -94,7 +94,7 @@ sub BUILD {
 #warn "$craft->{name}: [$x0, $y0], [$x1, $y1], $craft->{points}\n";
 
         # Add the craft to the grid.
-        for my $n (0 .. $craft->{points} - 1) {
+        for my $n (0 .. $craft->points - 1) {
             if ($orient) {
                 $self->{matrix}[$x0 + $n][$y0] = $craft->{id};
             }

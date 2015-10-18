@@ -67,12 +67,12 @@ sub BUILD {
 
     $self->{grid} =
         Game::Battleship::Grid->new(
-            fleet      => $self->{fleet},
-            dimensions => $self->{dimensions},
+            fleet      => $self->fleet,
+            dimensions => $self->dimensions,
         );
 
     # Compute the life points for this player.
-    $self->{life} += $_->{points} for @{ $self->{fleet} };
+    $self->{life} += $_->points for @{ $self->fleet };
 }
 
 # The enemy must be a G::B::Player object.
@@ -80,7 +80,7 @@ sub matrix {
     my ($self, $enemy) = @_;
     return $enemy
         ? join "\n",
-            map { "@$_" } @{ $self->{$enemy->{name}}{matrix} }
+            map { "@$_" } @{ $self->{$enemy->name}{matrix} }
         : join "\n",
             map { "@$_" } @{ $self->{grid}{matrix} };
 }
@@ -93,16 +93,16 @@ sub strike {
     croak "No coordinate at which to strike.\n"
         unless defined $x && defined $y;
 
-    if ($enemy->{life} > 0) {
+    if ($enemy->life > 0) {
         # Initialize the enemy grid map if we need to.
-        $self->{$enemy->{name}} = Game::Battleship::Grid->new
-            unless exists $self->{$enemy->{name}};
+        $self->{$enemy->name} = Game::Battleship::Grid->new
+            unless exists $self->{$enemy->name};
 
         my $enemy_pos = \$enemy->{grid}{matrix}[$x][$y];
-        my $map_pos   = \$self->{$enemy->{name}}{matrix}[$x][$y];
+        my $map_pos   = \$self->{$enemy->name}{matrix}[$x][$y];
 
         if ($$map_pos ne '.') {
-            warn "Duplicate strike on $enemy->{name} by $self->{name} at $x, $y.\n";
+            warn "Duplicate strike on ", $enemy->name, ' by ', $self->name, " at $x, $y.\n";
             return -1;
         }
         elsif ($enemy->_is_a_hit($x, $y)) { # Set the enemy grid map coordinate char to 'hit'.
@@ -111,14 +111,14 @@ sub strike {
             # What craft was hit?
             my $craft = $self->craft(id => $$enemy_pos);
 
-            warn "$self->{name} hit $enemy->{name}'s $craft->{name}!\n";
+            warn $self->name, ' hit ', $enemy->name, "'s ", $craft->name, "!\n";
 
             # How much is left on this craft?
             my $remainder = $craft->hit;
 
             # Tally the hit in the craft object, itself and emit a happy
             # warning if it was totally destroyed.
-            warn "$self->{name} sunk $enemy->{name}'s $craft->{name}!\n"
+            warn $self->name, ' sunk ', $enemy->name, "'s ", $craft->name, "!\n"
                 unless $remainder;
 
             # Indicate the hit on the enemy grid by lowercasing the craft
@@ -129,20 +129,20 @@ sub strike {
             $self->{score}++;
 
             # Decrement the opponent's life.
-            warn "$enemy->{name} is out of the game.\n"
+            warn $enemy->name, " is out of the game.\n"
                 if --$enemy->{life} <= 0;
 
             return 1;
         }
         else {
             # Set the enemy grid map coordinate char to 'miss'.
-            warn "$self->{name} missed $enemy->{name} at $x, $y.\n";
+            warn $self->name, ' missed ', $enemy->name, " at $x, $y.\n";
             $$map_pos = 'o';
             return 0;
         }
     }
     else {
-        warn "$enemy->{name} is already out of the game. Strike another opponent.\n";
+        warn $enemy->name, " is already out of the game. Strike another opponent.\n";
         return -1;
     }
 }

@@ -155,10 +155,10 @@ sub player {
 
     # Step through each player...
     for (keys %{ $self->{players} }) {
-        # Are we looking at the same player name, key or number?
+        # Are we looking at the same player by name, key or id?
         if( $_ eq $name ||
-            $self->{players}{$_}{name} eq $name ||
-            $self->{players}{$_}{id} eq $name
+            $self->{players}{$_}->name eq $name ||
+            $self->{players}{$_}->id eq $name
         ) {
             # Set the player object to return.
             $player = $self->{players}{$_};
@@ -189,12 +189,12 @@ sub play {
     while (not $winner) {
         # Take a turn per live player.
         for my $player (values %{ $self->{players} }) {
-            next unless $player->{life};
+            next unless $player->life;
 
             # Strike each opponent.
             for my $opponent (values %{ $self->{players} }) {
-                next if $opponent->{name} eq $player->{name} ||
-                    !$opponent->{life};
+                next if $opponent->name eq $player->name ||
+                    !$opponent->life;
 
                 my $res = -1;  # "duplicate strike" flag.
                 while ($res == -1) {
@@ -207,7 +207,7 @@ sub play {
         }
 
         # Do we have a winner?
-        my @alive = grep { $self->{players}{$_}{life} } keys %{ $self->{players} };
+        my @alive = grep { $self->{players}{$_}->life } keys %{ $self->{players} };
         $winner = @alive == 1 ? shift @alive : undef;
     }
 

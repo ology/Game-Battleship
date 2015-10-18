@@ -271,8 +271,6 @@ __END__
 Implement the "number of shots" measure.  This may be based on life
 remaining, shots taken, hits made or ships sunk (etc?).
 
-Make the C<play> method output the player grids for each turn.
-
 Enhance weaponry and sensing.
 
 =head1 SEE ALSO

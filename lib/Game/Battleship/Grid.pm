@@ -257,6 +257,10 @@ If not provided, the standard ten by ten playing surface is used.
 
 =back
 
+=head2 B<BUILD>
+
+Setup
+
 =head1 PRIVATE FUNCTIONS
 
 =over 4

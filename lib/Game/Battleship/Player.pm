@@ -18,11 +18,6 @@ has name => (
     isa => Str,
 );
 
-has score => (
-    is  => 'ro',
-    isa => Int,
-);
-
 has life => (
     is  => 'ro',
     isa => Int,
@@ -221,6 +216,22 @@ complete with fleet and game surface.
   );
 
 =over 4
+
+=item * id => $STRING
+
+Computed
+
+=item * grid => $STRING
+
+Computed
+
+=item * life => $STRING
+
+Computed
+
+=item * id => $STRING
+
+Computed
 
 =item * name => $STRING
 

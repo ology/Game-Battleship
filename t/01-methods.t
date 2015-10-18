@@ -8,37 +8,30 @@ my $obj = eval { Game::Battleship->new };
 print "$@\n" if $@;
 isa_ok $obj, 'Game::Battleship', 'with no arguments';
 
-$obj = Game::Battleship->new('gene', 'aaron');
+$obj = Game::Battleship->new;
+$obj->add_player('gene');
+$obj->add_player('aaron');
 isa_ok $obj, 'Game::Battleship', 'with named players';
 
 my $gene = $obj->player('gene');
-isa_ok $gene, 'Game::Battleship::Player',
-    'gene by object';
+isa_ok $gene, 'Game::Battleship::Player', 'gene by object';
 my $aaron = $obj->player('aaron');
-isa_ok $aaron, 'Game::Battleship::Player',
-    'aaron by object';
+isa_ok $aaron, 'Game::Battleship::Player', 'aaron by object';
 
 my $alisa = $obj->add_player('alisa');
 isa_ok $alisa, 'Game::Battleship::Player', 'alisa';
 is $alisa->{id}, 3, 'generated player id number';
-isa_ok $obj->player(3), 'Game::Battleship::Player',
-    'alisa by number';
-isa_ok $obj->player('player_3'), 'Game::Battleship::Player',
-    'alisa by key';
-isa_ok $obj->player('alisa'), 'Game::Battleship::Player',
-    'alisa by name';
+isa_ok $obj->player(3), 'Game::Battleship::Player', 'alisa by number';
+isa_ok $obj->player('player_3'), 'Game::Battleship::Player', 'alisa by key';
+isa_ok $obj->player('alisa'), 'Game::Battleship::Player', 'alisa by name';
 ok $obj->player(3) eq $obj->player('player_3') && $obj->player(3) eq $obj->player('alisa'), 'alisa';
 
 my $bogus = $obj->player('bogus');
 is $bogus, undef, 'bogus is not a player';
 
-is_deeply join( ',', sort map { $_->name } @{ $obj->players } ),
-    'aaron,alisa,gene', 'players';
-
 my $craft = $aaron->craft(id => 'A');
 isa_ok $craft, 'Game::Battleship::Craft', 'by id';
-isa_ok $aaron->craft(name => 'aircraft carrier'),
-    'Game::Battleship::Craft', 'by name';
+isa_ok $aaron->craft(name => 'aircraft carrier'), 'Game::Battleship::Craft', 'by name';
 ok $craft->hit == $craft->{points} - 1, 'craft hit';
 
 my $ggrid = $gene->grid;
@@ -57,14 +50,14 @@ for my $i ( 0 .. 9 ) {
             $strike = $aaron->strike($gene, $i, $j);
             ok $strike == 0 || $strike == 1,
                 "aaron strikes gene at row=$i, col=$j";
-            $agrid = $aaron->grid($gene);
+#            $agrid = $aaron->grid($gene);
 #            ok length($agrid), "aaron vs gene grid:\n" . join( "\n", $agrid );
         }
         else {
             $strike = $gene->strike($aaron, $i, $j);
             ok length($strike),
                 "gene strikes aaron at row=$i, col=$j";
-            $ggrid = $gene->grid($aaron);
+#            $ggrid = $gene->grid($aaron);
 #            ok length($ggrid), "gene vs aaron grid:\n" . join( "\n", $ggrid );
         }
 
@@ -77,9 +70,8 @@ for my $i ( 0 .. 9 ) {
 }
 
     $strike = $gene->strike($aaron, 0, 0);
-    ok length($strike),
-        "gene strikes aaron at row=0, col=0";
-    $ggrid = $gene->grid($aaron);
+    ok length($strike), "gene strikes aaron at row=0, col=0";
+#    $ggrid = $gene->grid($aaron);
 #    ok length($ggrid), "gene vs aaron grid:\n" . join( "\n", $ggrid );
     ok $strike == 0 || $strike == 1 || $strike == -1,
         "..and it's a ($strike) " .
@@ -94,5 +86,4 @@ ok length($agrid), "aaron's resulting grid:\n" . join( "\n", $agrid );
 
 __END__
 # This works great but is sometimes seemingly infinitely long...
-#$obj = Game::Battleship->new('gene', 'aaron');
 $obj->play;

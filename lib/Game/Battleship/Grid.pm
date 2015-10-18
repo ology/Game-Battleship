@@ -4,21 +4,23 @@ use warnings;
 use Carp;
 use Game::Battleship::Craft;
 
-sub new {
-    my ($proto, %args) = @_;
-    my $class = ref ($proto) || $proto;
-    my $self = {
-        # User defined or use the standard, zero based one.
-        dimension => $args{dimension} || [9, 9],
-    };
-    bless $self, $class;
-    $self->_init($args{fleet});
-    return $self;
-}
+use Moo;
+use Types::Standard qw( ArrayRef Int );
+
+has dimension => (
+    is      => 'ro',
+    isa     => ArrayRef[Int],
+    default => sub { [ 9, 9 ] },
+);
+
+has fleet => (
+    is  => 'ro',
+    isa => ArrayRef,
+);
 
 # Place the array reference of craft on the grid.
-sub _init {
-    my ($self, $fleet) = @_;
+sub BUILD {
+    my $self = shift;
 
     # Initialize the matrix.
     for my $i (0 .. $self->{dimension}[0]) {
@@ -28,7 +30,7 @@ sub _init {
     }
 
     # Place the fleet on the grid.
-    for my $craft (@$fleet) {
+    for my $craft (@{ $self->{fleet} }) {
         my ($ok, $x0, $y0, $x1, $y1, $orient);
 
         if (defined $craft->{position}) {
@@ -64,7 +66,7 @@ sub _init {
                     # a position, do the craft share a common point?
                     my $collide = 0;
 
-                    for (@$fleet) {
+                    for (@{ $self->{fleet} }) {
                         # Ships can't be the same.
                         if ($craft->{name} ne $_->{name}) {
                             # Ships can't intersect.

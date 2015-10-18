@@ -3,31 +3,40 @@ use strict;
 use warnings;
 use Carp;
 
-sub new {
-    my ($proto, %args) = @_;
-    my $class = ref ($proto) || $proto;
+use Moo;
+use Types::Standard qw( ArrayRef Int Num Str );
 
-    # The name is a required attribute.
-    croak "Craft name not provided.\n" unless defined $args{name};
+has id => (
+    is  => 'ro',
+    isa => Str,
+);
 
-    my $self = {
-        # Who am I?
-        id   => $args{id},
-        name => $args{name},
-        # Where's my bow (craft nose)?
-        position => $args{position} || undef,
-        # How much am I worth?
-        points => $args{points} || undef,
-        # How many times have I been hit?
-        hits => $args{hits} || 0,
-    };
+has name => (
+    is  => 'ro',
+    isa => Str,
+);
 
+has position => (
+    is  => 'ro',
+    isa => ArrayRef[Num],
+);
+
+has points => (
+    is  => 'ro',
+    isa => Int,
+);
+
+has hits => (
+    is  => 'ro',
+    isa => Int,
+);
+
+sub BUILD {
+    my $self = shift;
     # Default the id to the upper-cased first char of name.
-    $self->{id} = ucfirst substr $self->{name}, 0, 1
-        unless defined $self->{id};
-
-    bless $self, $class;
-    return $self;
+    unless ( $self->id ) {
+        $self->{id} = ucfirst substr( $self->{name}, 0, 1 );
+    }
 }
 
 sub hit {
@@ -58,8 +67,7 @@ Game::Battleship::Craft - A Battleship craft class
 
 =head1 DESCRIPTION
 
-A C<Game::Battleship::Craft> object represents the profile of a
-Battleship
+A C<Game::Battleship::Craft> object represents the profile of a Battleship craft.
 
 =head1 PUBLIC METHODS
 
@@ -89,8 +97,7 @@ An attribute used to define the line segment span on the playing grid.
 
 The position of the craft bow ("nose") on the grid.
 
-Currently, the craft is assumed to have a horizontal or vertical
-alignment.  Soon there will be diagonal positioning...
+The craft is assumed to have a horizontal or vertical alignment.
 
 =back
 

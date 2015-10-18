@@ -8,6 +8,7 @@ our $VERSION = '0.0505';
 
 use Carp;
 use Game::Battleship::Player;
+use Moo;
 
 =head1 NAME
 
@@ -42,17 +43,16 @@ modules.  See the distribution test script for working code examples.
 =head2 B<new()>
 
   $g = Game::Battleship->new;
+  $g = Game::Battleship->new( players => [$player1, $player2] );
 
 Construct a new C<Game::Battleship> object.
 
 =cut
 
-sub new {
-    my $class = shift;
-    my $self = {};
-    bless $self, $class;
-    return $self;
-}
+has players => (
+    is  => 'rw',
+    isa => sub { croak 'Invalid players list' unless ref($_[0]) eq 'HASH' },
+);
 
 =head2 B<add_player()>
 
@@ -91,7 +91,7 @@ sub add_player {
         # ..find the least whole number that is not already used.
         my @nums = sort { $a <=> $b }
             grep { s/^player_(\d+)$/$1/ }
-                keys %$self;
+                keys %{ $self->{players} };
         my $n = 1;
         for (@nums) {
             last if $n > $_;
@@ -104,7 +104,7 @@ sub add_player {
     my $who = "player_$i";
 
     # Return undef if we are trying to add an existing player.
-    if ( exists $self->{$who} ) {
+    if ( exists $self->{players}{$who} ) {
         warn "A player number $i already exists\n";
         return;
     }
@@ -114,11 +114,11 @@ sub add_player {
 
     # We are given a player object.
     if (ref ($player) eq 'Game::Battleship::Player') {
-        $self->{$who} = $player;
+        $self->{players}{$who} = $player;
     }
     # We are given the guts of a player.
     elsif (ref ($player) eq 'HASH') {
-        $self->{$who} = Game::Battleship::Player->new(
+        $self->{players}{$who} = Game::Battleship::Player->new(
             id => $player->{id} || $i,
             name => $player->{name} || $who,
             fleet => $player->{fleet},
@@ -127,14 +127,14 @@ sub add_player {
     }
     # We are just given a name.
     else {
-        $self->{$who} = Game::Battleship::Player->new(
+        $self->{players}{$who} = Game::Battleship::Player->new(
             id   => $i,
             name => $player,
         );
     }
 
     # Hand the player object back.
-    return $self->{$who};
+    return $self->{players}{$who};
 }
 
 =head2 B<player()>
@@ -154,16 +154,14 @@ sub player {
     my $player;
 
     # Step through each player...
-    for (keys %$self) {
-        next unless /^player_/;
-
+    for (keys %{ $self->{players} }) {
         # Are we looking at the same player name, key or number?
         if( $_ eq $name ||
-            $self->{$_}{name} eq $name ||
-            $self->{$_}{id} eq $name
+            $self->{players}{$_}{name} eq $name ||
+            $self->{players}{$_}{id} eq $name
         ) {
             # Set the player object to return.
-            $player = $self->{$_};
+            $player = $self->{players}{$_};
             last;
         }
     }
@@ -190,11 +188,11 @@ sub play {
 
     while (not $winner) {
         # Take a turn per live player.
-        for my $player (@{ $self->{players} }) {
+        for my $player (keys %{ $self->{players} }) {
             next unless $player->{life};
 
             # Strike each opponent.
-            for my $opponent (@{ $self->{players} }) {
+            for my $opponent (keys %{ $self->{players} }) {
                 next if $opponent->{name} eq $player->{name} ||
                     !$opponent->{life};
 
@@ -209,11 +207,11 @@ sub play {
         }
 
         # Do we have a winner?
-        my @alive = grep { $_->{life} } @{ $self->{players} };
+        my @alive = grep { $self->{players}{$_}{life} } keys %{ $self->{players} };
         $winner = @alive == 1 ? shift @alive : undef;
     }
 
-warn $winner->name ." is the winner!\n";
+#warn $winner->name ." is the winner!\n";
     return $winner;
 }
 

@@ -5,16 +5,34 @@ use Carp;
 use Game::Battleship::Craft;
 use Game::Battleship::Grid;
 
-sub new {
-    my ($proto, %args) = @_;
-    my $class = ref ($proto) || $proto;
+use Moo;
+use Types::Standard qw( ArrayRef Int Str );
 
-    my $self = {
-        id    => $args{id}    || undef,
-        name  => $args{name}  || undef,
-        score => $args{score} || 0,
-        life  => $args{life}  || 0,
-        fleet => $args{fleet} || [
+has id => (
+    is  => 'ro',
+    isa => Str,
+);
+
+has name => (
+    is  => 'ro',
+    isa => Str,
+);
+
+has score => (
+    is  => 'ro',
+    isa => Int,
+);
+
+has life => (
+    is  => 'ro',
+    isa => Int,
+);
+
+has fleet => (
+    is      => 'ro',
+    isa     => ArrayRef,
+    default => sub {
+        [
             Game::Battleship::Craft->new(
                 name   => 'aircraft carrier',
                 points => 5,
@@ -35,32 +53,35 @@ sub new {
                 name   => 'destroyer',
                 points => 2,
             ),
-        ],
-    };
+        ]
+    },
+);
 
-    bless $self, $class;
-    $self->_init(\%args);
-    return $self;
-}
+has dimensions => (
+    is  => 'ro',
+    isa => ArrayRef[Int],
+);
 
-sub _init {
-    my ($self, $args) = @_;
+has grid => (
+    is  => 'ro',
+    isa => ArrayRef,
+);
 
-    # Initialize a grid and place the player's fleet, if one is
-    # provided.
-    $self->{grid} = Game::Battleship::Grid->new(
-        fleet => $self->{fleet},
-        dimensions => $args->{dimensions},
-    );
+sub BUILD {
+    my $self = shift;
+
+    $self->{grid} =
+        Game::Battleship::Grid->new(
+            fleet      => $self->{fleet},
+            dimensions => $self->{dimensions},
+        );
 
     # Compute the life points for this player.
     $self->{life} += $_->{points} for @{ $self->{fleet} };
 }
 
-sub name { return shift->{name} }
-
 # The enemy must be a G::B::Player object.
-sub grid {
+sub matrix {
     my ($self, $enemy) = @_;
     return $enemy
         ? join "\n",
@@ -223,10 +244,10 @@ ten by ten grid is used.
 
 =back
 
-=item B<grid>
+=item B<matrix>
 
-  $grid = $player->grid();
-  $grid = $player->grid($enemy);
+  $grid = $player->matrix();
+  $grid = $player->matrix($enemy);
 
 Return the playing grid as a "flush-left" text matrix like this:
 
@@ -240,9 +261,6 @@ Return the playing grid as a "flush-left" text matrix like this:
   . D . . . A . . . B
   . . . . . A . . . B
   . . . . . A . . . B
-
-Eventually, this method will respect the game type and return an
-appropriate representation, such as a PNG file or XML, etc.
 
 =item B<strike> $PLAYER, @COORDINATE
 

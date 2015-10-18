@@ -188,11 +188,11 @@ sub play {
 
     while (not $winner) {
         # Take a turn per live player.
-        for my $player (keys %{ $self->{players} }) {
+        for my $player (values %{ $self->{players} }) {
             next unless $player->{life};
 
             # Strike each opponent.
-            for my $opponent (keys %{ $self->{players} }) {
+            for my $opponent (values %{ $self->{players} }) {
                 next if $opponent->{name} eq $player->{name} ||
                     !$opponent->{life};
 
@@ -207,7 +207,7 @@ sub play {
         }
 
         # Do we have a winner?
-        my @alive = grep { $self->{players}{$_}{life} } keys %{ $self->{players} };
+        my @alive = grep { $self->{players}{$_}{life} } values %{ $self->{players} };
         $winner = @alive == 1 ? shift @alive : undef;
     }
 

@@ -4,7 +4,7 @@ package Game::Battleship;
 use strict;
 use warnings;
 
-our $VERSION = '0.0504';
+our $VERSION = '0.0505';
 
 use Carp;
 use Game::Battleship::Player;
@@ -17,7 +17,7 @@ Game::Battleship - "You sunk my battleship!"
 
   use Game::Battleship;
   my $g = Game::Battleship->new(qw( Gene Aaron ));
-  $g->add_player('Alisa');
+  $g->add_player('Tabi');
   my $winner = $g->play();
   print $winner->name(), " wins!\n";
 

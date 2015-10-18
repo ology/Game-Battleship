@@ -1,7 +1,7 @@
 Revision history for Games-Battleship
 
 {{$NEXT}}
-    - Removed unused players() attribute and accessor.
+    - Use Moo!
 
 0.0505 2015-10-18
     - Whoops! Removed accidentally left-in POD cruft.

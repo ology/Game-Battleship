@@ -16,7 +16,8 @@ Game::Battleship - "You sunk my battleship!"
 =head1 SYNOPSIS
 
   use Game::Battleship;
-  my $g = Game::Battleship->new(qw( Gene Aaron ));
+  my $g = Game::Battleship->new;
+  $g->add_player('Aaron');
   $g->add_player('Tabi');
   my $winner = $g->play();
   print $winner->name(), " wins!\n";
@@ -41,25 +42,8 @@ modules.  See the distribution test script for working code examples.
 =head2 B<new()>
 
   $g = Game::Battleship->new;
-  $g = Game::Battleship->new($name);
-  $g = Game::Battleship->new($player_object);
-  $g = Game::Battleship->new(
-      { name => $name,
-        fleet => \@fleet,
-        dimensions => [ $width, $height ] },
-  );
 
 Construct a new C<Game::Battleship> object.
-
-The players can be given as strings, C<Game::Battleship::Player>
-objects or as hash references containing player attributes.
-
-If not given explicitly, 'player_1' and 'player_2' are used as the
-player names with two 10 x 10 grids and 5 predetermined ships are setup
-for each.
-
-See L<Game::Battleship::Player> for details on the default and custom
-settings.
 
 =cut
 
@@ -67,15 +51,7 @@ sub new {
     my $class = shift;
     my $self = {};
     bless $self, $class;
-    $self->_setup(@_);
     return $self;
-}
-
-sub _setup {
-    my ($self, @players) = @_;
-    # Set up a default, two player game if no players are given.
-    @players = ('', '') unless @players;
-    $self->add_player($_) for @players;
 }
 
 =head2 B<add_player()>
@@ -101,6 +77,9 @@ the player number.
 If this number is not provided, the least whole number that is not
 represented in the player IDs is used.  If a player already exists
 with that number, a warning is emitted and the player is not added.
+
+See L<Game::Battleship::Player> for details on the default and custom
+settings.
 
 =cut
 
@@ -154,9 +133,6 @@ sub add_player {
         );
     }
 
-    # Add the player object reference to the list of game players.
-    push @{ $self->{players} }, $self->{$who};
-
     # Hand the player object back.
     return $self->{$who};
 }
@@ -195,12 +171,6 @@ sub player {
     warn "No such player '$name'\n" unless $player;
     return $player;
 }
-
-=head2 B<players()>
-
-=cut
-
-sub players { return shift->{players} }
 
 =head2 B<play()>
 

@@ -1,5 +1,4 @@
 package Game::Battleship::Craft;
-$VERSION = '0.0302';
 use strict;
 use warnings;
 use Carp;
@@ -107,15 +106,5 @@ the craft (total point value minus the number of hits).
 Have different numbers of different weapons.
 
 Allow a craft to have a width.
-
-Allow diagonal positions too.  Why not?
-
-=head1 AUTHOR
-
-Gene Boggs E<lt>gene@cpan.orgE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-See L<Game::Battleship>.
 
 =cut

@@ -4,7 +4,7 @@ package Game::Battleship;
 use strict;
 use warnings;
 
-our $VERSION = '0.0503';
+our $VERSION = '0.0504';
 
 use Carp;
 use Game::Battleship::Player;

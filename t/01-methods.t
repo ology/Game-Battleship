@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More 'no_plan';
+use Test::More;
 
 BEGIN { use_ok('Game::Battleship') }
 
@@ -83,6 +83,8 @@ $ggrid = $gene->grid;
 ok length($ggrid), "gene's resulting grid:\n" . join( "\n", $ggrid );
 $agrid = $aaron->grid;
 ok length($agrid), "aaron's resulting grid:\n" . join( "\n", $agrid );
+
+done_testing();
 
 __END__
 # This works great but is sometimes seemingly infinitely long...

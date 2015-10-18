@@ -3,6 +3,7 @@ Revision history for Games-Battleship
 {{NEXT}}
     - Improved documentation.
     - Update dist.ini with modern tools.
+    - Removed imaginary "game type" logic.
 
 0.0503 Tue Jun 19 2012
     - Add Test::PodSpelling to dist.ini and fixed more, horrendous, embarrassing typos in the POD.  OOF.

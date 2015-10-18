@@ -1,7 +1,7 @@
 Revision history for Games-Battleship
 
 {{$NEXT}}
-    - Utilize moo accessor methods instead of via raw hashes.
+    - Utilize additional Moo features.
 
 0.06  2015-10-18
     - Use Moo!

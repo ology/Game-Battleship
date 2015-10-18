@@ -207,7 +207,7 @@ sub play {
         }
 
         # Do we have a winner?
-        my @alive = grep { $self->{players}{$_}{life} } values %{ $self->{players} };
+        my @alive = grep { $self->{players}{$_}{life} } keys %{ $self->{players} };
         $winner = @alive == 1 ? shift @alive : undef;
     }
 

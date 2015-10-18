@@ -1,6 +1,6 @@
 Revision history for Games-Battleship
 
-{{NEXT}}
+{{$NEXT}}
     - Improved documentation.
     - Removed imaginary "game type" logic.
     - Update distribution metadata with modern tools.

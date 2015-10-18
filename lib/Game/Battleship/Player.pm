@@ -1,5 +1,4 @@
 package Game::Battleship::Player;
-$VERSION = '0.0502';
 use strict;
 use warnings;
 use Carp;

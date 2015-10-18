@@ -255,6 +255,10 @@ ten by ten grid is used.
 
 =back
 
+=item B<BUILD>
+
+Setup
+
 =item B<matrix>
 
   $grid = $player->matrix();

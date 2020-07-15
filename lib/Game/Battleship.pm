@@ -28,9 +28,9 @@ Everything is an object with default but mutable attributes.  This way
 games can have two or more players each with a single fleet of custom
 vessels.
 
-A game can be played with the handy C<play> method or for finer
+A game can be played with the handy C<play> method, or for finer
 control, use individual methods of the C<Game::Battleship::*>
-modules.  See the distribution test script for working code examples.
+modules.
 
 =head1 METHODS
 
@@ -237,7 +237,7 @@ Enhance weaponry and sensing.
 
 =head1 SEE ALSO
 
-* The code in the C<t/> directory.
+* F<t/01-methods.t>
 
 * L<Game::Battleship::Craft>, L<Game::Battleship::Grid>, L<Game::Battleship::Player>
 

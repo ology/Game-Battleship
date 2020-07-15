@@ -83,9 +83,9 @@ indicated by "lower-casing" this mark on a player grid.
 
 A required attribute provided to give the craft a name.
 
-=item * points => $NUMBER
+=item * points => $INTEGER
 
-An attribute used to define the line segment span on the playing grid.
+The number of total points that a craft is worth.
 
 =item * position => [$X, $Y]
 
@@ -93,7 +93,7 @@ The position of the craft bow ("nose") on the grid.
 
 The craft is assumed to have a horizontal or vertical alignment.
 
-=item * hits => $NUMBER
+=item * hits => $INTEGER
 
 Computed
 

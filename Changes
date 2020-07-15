@@ -1,7 +1,7 @@
 Revision history for Games-Battleship
 
 {{$NEXT}}
-    - Clean-up POD.
+    - Clean-up POD and improve documentation.
 
 0.0601 2015-10-18
     - Utilize additional Moo features.

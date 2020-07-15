@@ -19,6 +19,11 @@ has position => (
     isa => ArrayRef[Num],
 );
 
+has vertical => (
+    is  => 'ro',
+    isa => Int,
+);
+
 has points => (
     is  => 'ro',
     isa => Int,
@@ -32,6 +37,7 @@ has hits => (
 sub BUILD {
     my $self = shift;
     # Default the id to the upper-cased first char of name.
+    # XXX This is brittle!
     unless ( $self->id ) {
         $self->{id} = ucfirst substr( $self->{name}, 0, 1 );
     }
@@ -91,7 +97,11 @@ The number of total points that a craft is worth.
 
 The position of the craft bow ("nose") on the grid.
 
-The craft is assumed to have a horizontal or vertical alignment.
+=item * vertical => $BOOLEAN
+
+The vertical or horizontal orientation of the craft.
+
+If not given, the craft is randomly oriented on creation.
 
 =item * hits => $INTEGER
 

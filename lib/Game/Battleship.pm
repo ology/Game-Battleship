@@ -237,10 +237,10 @@ Enhance weaponry and sensing.
 
 =head1 SEE ALSO
 
-* F<t/01-methods.t>
+F<t/01-methods.t>
 
-* L<Game::Battleship::Craft>, L<Game::Battleship::Grid>, L<Game::Battleship::Player>
+L<Game::Battleship::Craft>, L<Game::Battleship::Grid>, L<Game::Battleship::Player>
 
-* L<http://en.wikipedia.org/wiki/Battleship_%28game%29>
+L<http://en.wikipedia.org/wiki/Battleship_%28game%29>
 
 =cut

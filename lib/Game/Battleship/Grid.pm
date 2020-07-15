@@ -300,6 +300,6 @@ L<Game::Battleship::Craft>
 
 Segment intersection:
 
-C<http://www.meca.ucl.ac.be/~wu/FSA2716/Exercise1.htm>
+L<http://www.meca.ucl.ac.be/~wu/FSA2716/Exercise1.htm>
 
 =cut

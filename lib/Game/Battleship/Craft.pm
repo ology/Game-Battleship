@@ -65,7 +65,7 @@ A C<Game::Battleship::Craft> object represents the profile of a Battleship craft
 
 =head1 PUBLIC METHODS
 
-=head2 B<new> %ARGUMENTS
+=head2 new
 
 =over 4
 
@@ -99,11 +99,9 @@ Computed
 
 =back
 
-=head2 B<BUILD>
+=for Pod::Coverage BUILD
 
-Setup
-
-=head2 B<hit()>
+=head2 hit
 
   $points_remaining = $craft->hit;
 

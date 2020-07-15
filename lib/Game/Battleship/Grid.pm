@@ -228,7 +228,7 @@ collision detection.
 
 =head1 PUBLIC METHODS
 
-=head2 B<new> %ARGUMENTS
+=head2 new
 
 =over 4
 
@@ -251,15 +251,13 @@ If not provided, the standard ten by ten playing surface is used.
 
 =back
 
-=head2 B<BUILD>
-
-Setup
+=for Pod::Coverage BUILD
 
 =head1 PRIVATE FUNCTIONS
 
 =over 4
 
-=item B<_tail_coordinates> @COORDINATES, $SPAN
+=item _tail_coordinates
 
   ($orientation, $x1, $y1) = _tail_coordinates($x0, $y0, $span);
 
@@ -267,7 +265,7 @@ Return a vector for the craft.  That is, hand back the vertical or
 horizontal line segment orientation and the tail coordinates based on
 the head coordinates and the length of the segment (i.e. the craft).
 
-=item B<_segment_intersection> @COORDINATES
+=item _segment_intersection
 
   $intersect = _segment_intersection(
       p_x0, p_y0,  p_x1, p_y1,
@@ -300,13 +298,5 @@ L<Game::Battleship::Craft>
 Segment intersection:
 
 C<http://www.meca.ucl.ac.be/~wu/FSA2716/Exercise1.htm>
-
-=head1 AUTHOR
-
-Gene Boggs E<lt>gene@cpan.orgE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-See L<Game::Battleship>.
 
 =cut

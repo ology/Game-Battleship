@@ -201,7 +201,7 @@ complete with fleet and game surface.
 
 =over 4
 
-=item B<new> %ARGUMENTS
+=item new
 
   $player => Game::Battleship::Player->new(
       name  => 'Aaron',
@@ -249,13 +249,11 @@ ten by ten grid is used.
 
 =back
 
-=item B<BUILD>
+=for Pod::Coverage BUILD
 
-Setup
+=item matrix
 
-=item B<matrix>
-
-  $grid = $player->matrix();
+  $grid = $player->matrix;
   $grid = $player->matrix($enemy);
 
 Return the playing grid as a "flush-left" text matrix like this:
@@ -271,7 +269,7 @@ Return the playing grid as a "flush-left" text matrix like this:
   . . . . . A . . . B
   . . . . . A . . . B
 
-=item B<strike> $PLAYER, @COORDINATE
+=item strike
 
   $strike = $player->strike($enemy, $x, $y);
 
@@ -297,7 +295,7 @@ grid" at the given coordinate and a zero (i.e. false) is returned.
 If a player calls for a strike at a coordinate that was already
 struck, a warning is emitted and a negative one (-1) is returned.
 
-=item B<craft> $KEY [$VALUE]
+=item craft
 
   $craft = $player->craft($id);
   $craft = $player->craft(id => $id);
@@ -315,7 +313,7 @@ be the C<id> attribute.
 
 =over 4
 
-=item B<_is_a_hit> @COORDINATE
+=item _is_a_hit
 
 Return true or false if another player's strike is successful.  That
 is, return a one if there is a craft at the given coordinate and zero
@@ -335,13 +333,5 @@ appropriate.
 L<Game::Battleship>,
 L<Game::Battleship::Craft>,
 L<Game::Battleship::Grid>
-
-=head1 AUTHOR
-
-Gene Boggs E<lt>gene@cpan.orgE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-See L<Game::Battleship>.
 
 =cut

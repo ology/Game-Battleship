@@ -14,8 +14,8 @@ use Moo;
   my $g = Game::Battleship->new;
   $g->add_player('Aaron');
   $g->add_player('Tabi');
-  my $winner = $g->play();
-  print $winner->name(), " wins!\n";
+  my $winner = $g->play;
+  print $winner->name, " wins!\n";
 
 =head1 DESCRIPTION
 
@@ -28,13 +28,13 @@ Everything is an object with default but mutable attributes.  This way
 games can have two or more players each with a single fleet of custom
 vessels.
 
-A game can be played with the handy C<play()> method or for finer
+A game can be played with the handy C<play> method or for finer
 control, use individual methods of the C<Game::Battleship::*>
 modules.  See the distribution test script for working code examples.
 
 =head1 METHODS
 
-=head2 B<new()>
+=head2 new
 
   $g = Game::Battleship->new;
   $g = Game::Battleship->new( players => [$player1, $player2] );
@@ -48,7 +48,7 @@ has players => (
     isa => sub { croak 'Invalid players list' unless ref($_[0]) eq 'HASH' },
 );
 
-=head2 B<add_player()>
+=head2 add_player
 
   $g->add_player;
   $g->add_player($name);
@@ -131,7 +131,7 @@ sub add_player {
     return $self->{players}{$who};
 }
 
-=head2 B<player()>
+=head2 player
 
   $player_obj = $g->player($name);
   $player_obj = $g->player($number);
@@ -164,7 +164,7 @@ sub player {
     return $player;
 }
 
-=head2 B<play()>
+=head2 play
 
   $winner = $g->play;
 

@@ -37,7 +37,8 @@ sub BUILD {
             # Set the craft orientation and tail coordinates.
             ($orient, $x1, $y1) = _tail_coordinates(
                 $x0, $y0,
-                $craft->points - 1
+                $craft->points - 1,
+                $craft->orient
             );
         }
         else {
@@ -50,7 +51,8 @@ sub BUILD {
                 # Set the craft orientation and tail coordinates.
                 ($orient, $x1, $y1) = _tail_coordinates(
                     $x0, $y0,
-                    $craft->points - 1
+                    $craft->points - 1,
+                    $craft->orient
                 );
 
                 # If the craft is not placed off the grid and it does
@@ -106,10 +108,11 @@ sub BUILD {
 sub _tail_coordinates {
     # Get the coordinates of the end of the segment based on a given
     # span.
-    my ($x0, $y0, $span) = @_;
+    my ($x0, $y0, $span, $orient) = @_;
 
     # Set orientation to 0 (vertical) or 1 (horizontal).
-    my $orient = int rand 2;
+    $orient = int rand 2
+        unless defined $orient;
 
     my ($x1, $y1) = ($x0, $y0);
 

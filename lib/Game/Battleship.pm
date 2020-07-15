@@ -1,4 +1,5 @@
 package Game::Battleship;
+
 # ABSTRACT: "You sunk my battleship!"
 
 our $VERSION = '0.0601';
@@ -6,10 +7,6 @@ our $VERSION = '0.0601';
 use Carp;
 use Game::Battleship::Player;
 use Moo;
-
-=head1 NAME
-
-Game::Battleship - "You sunk my battleship!"
 
 =head1 SYNOPSIS
 

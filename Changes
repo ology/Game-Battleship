@@ -2,7 +2,8 @@ Revision history for Games-Battleship
 
 {{$NEXT}}
     - Clean-up POD and improve documentation.
-    - Add a vertical attribute to craft objects to specify the orientation.
+    - Add a orient attribute to craft objects to specify the orientation.
+    - Fix the Dist::Zilla dist.ini.
 
 0.0601 2015-10-18
     - Utilize additional Moo features.

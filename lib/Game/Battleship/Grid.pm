@@ -212,10 +212,6 @@ sub _segment_intersection {
 
 __END__
 
-=head1 NAME
-
-Game::Battleship::Grid - A Battleship grid class
-
 =head1 SYNOPSIS
 
   use Game::Battleship::Grid;

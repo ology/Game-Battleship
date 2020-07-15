@@ -49,10 +49,6 @@ sub hit {
 
 __END__
 
-=head1 NAME
-
-Game::Battleship::Craft - A Battleship craft class
-
 =head1 SYNOPSIS
 
   use Game::Battleship::Craft;

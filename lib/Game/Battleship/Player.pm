@@ -176,10 +176,6 @@ sub craft {
 
 __END__
 
-=head1 NAME
-
-Game::Battleship::Player - A Battleship player class
-
 =head1 SYNOPSIS
 
   use Game::Battleship::Player;

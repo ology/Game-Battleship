@@ -19,7 +19,7 @@ has position => (
     isa => ArrayRef[Num],
 );
 
-has vertical => (
+has orient => (
     is  => 'ro',
     isa => Int,
 );
@@ -97,11 +97,13 @@ The number of total points that a craft is worth.
 
 The position of the craft bow ("nose") on the grid.
 
-=item * vertical => $BOOLEAN
+=item * orient => $BOOLEAN
 
 The vertical or horizontal orientation of the craft.
 
-If not given, the craft is randomly oriented on creation.
+Set this to C<0> for vertical and C<1> for horizontal.
+
+If not defined, the craft is randomly oriented on creation.
 
 =item * hits => $INTEGER
 
